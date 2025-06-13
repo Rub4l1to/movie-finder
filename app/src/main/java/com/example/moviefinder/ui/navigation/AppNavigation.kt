@@ -17,7 +17,7 @@ fun AppNavigation(appViewModel: AppViewModel, context: Context) {
     val navController = rememberNavController()
 
     val apiKey = context.getSharedPreferences("Prefs", Context.MODE_PRIVATE).getString("api_key", "")
-    val startDestination = if (apiKey != null && apiKey.isNotEmpty()) {
+    val startDestination = if (!apiKey.isNullOrEmpty()) {
         appViewModel.updateApiKey(apiKey)
         AppScreens.MAIN_SCREEN
     } else {
@@ -25,7 +25,7 @@ fun AppNavigation(appViewModel: AppViewModel, context: Context) {
     }
 
     NavHost(navController = navController, startDestination = startDestination) {
-        composable(route = AppScreens.WELCOME_SCREEN) { WelcomeScreen(appViewModel, navController) }
+        composable(route = AppScreens.WELCOME_SCREEN) { WelcomeScreen(navController, appViewModel) }
         composable(route = AppScreens.MAIN_SCREEN) { MainScreen(appViewModel, navController) }
         composable(route = AppScreens.MOVIE_DETAILS_SCREEN) { MovieDetailsScreen(appViewModel, navController) }
     }
