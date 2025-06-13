@@ -18,6 +18,7 @@ import java.net.URL
 import android.content.Context
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
+import androidx.core.content.edit
 
 class AppViewModel : ViewModel() {
 
@@ -120,7 +121,7 @@ class AppViewModel : ViewModel() {
     }
     fun logout(context: Context, onLoggedOut: () -> Unit) {
         context.getSharedPreferences("Prefs", Context.MODE_PRIVATE)
-            .edit().remove("api_key").apply()
+            .edit { remove("api_key") }
         updateApiKey("")
         onLoggedOut()
     }
